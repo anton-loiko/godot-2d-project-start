@@ -75,19 +75,28 @@ Settings/Show_Tooltips=true
 [application]
 
 config/name="Your First 2D Game With Godot 4: START (GDQuest)"
-run/main_scene="res://survivors_game.tscn"
+run/main_scene="res://game/loading/loading.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
+boot_splash/bg_color=Color(0.180392, 0.109804, 0.415686, 1)
+boot_splash/image="res://assets/splash/splash_screen.png"
 config/icon="res://icon.png"
 
 [display]
 
-window/size/viewport_width=1920
-window/size/viewport_height=1080
+window/size/viewport_width=1080
+window/size/viewport_height=1920
 window/stretch/mode="viewport"
+window/stretch/aspect="expand"
+window/handheld/orientation=1
 
 [dotnet]
 
 project/assembly_name="Getting started with Godot 4"
+
+[editor]
+
+movie_writer/movie_file="/Users/apple/tech/education/games/godot/2d-project-start/__export/movie/out.avi"
+movie_writer/disable_vsync=true
 
 [editor_plugins]
 
@@ -116,6 +125,14 @@ move_down={
 ]
 }
 
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+
 [layer_names]
 
 3d_physics/layer_2="player"
+
+[rendering]
+
+textures/vram_compression/import_etc2_astc=true

@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://ecett8bsbggm"]
+
+[ext_resource type="AudioStream" uid="uid://b5650u4qpq3ux" path="res://assets/audio/sfx/enemies/slime_death.wav" id="1_s8nm0"]
+
+[node name="MobAudio" type="AudioStreamPlayer"]
+stream = ExtResource("1_s8nm0")
+autoplay = true

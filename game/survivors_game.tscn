@@ -1,0 +1,217 @@
+[gd_scene load_steps=19 format=3 uid="uid://ck01tcojpwpkn"]
+
+[ext_resource type="PackedScene" uid="uid://y3qrsonetllu" path="res://game/player/player.tscn" id="1_1pcbf"]
+[ext_resource type="Script" path="res://game/survivors_game.gd" id="1_erucr"]
+[ext_resource type="Script" path="res://game/background.gd" id="2_i3ehf"]
+[ext_resource type="PackedScene" uid="uid://1ejee8ywnm5o" path="res://game/environment/pine_tree.tscn" id="2_jyx4o"]
+[ext_resource type="PackedScene" uid="uid://dnpobyhvhs7lb" path="res://game/map/map.tscn" id="3_8uj6u"]
+[ext_resource type="Script" path="res://game/score/score_in_game.gd" id="4_2k6da"]
+[ext_resource type="PackedScene" uid="uid://ci1ys5ljp8ff4" path="res://game/score/score_in_game.tscn" id="4_x1emh"]
+[ext_resource type="StyleBox" uid="uid://cvg77hi8i5mnf" path="res://game/UI/button/button_focus_style_box_flat.tres" id="7_3kc7b"]
+[ext_resource type="Texture2D" uid="uid://4x1tyih1kuan" path="res://assets/icons/24/pause.png" id="7_fenjy"]
+[ext_resource type="Script" path="res://game/game_over.gd" id="7_mhshv"]
+[ext_resource type="FontFile" uid="uid://bs5dy8ahwm5ug" path="res://assets/fonts/VT323/VT323-Regular.ttf" id="7_q4i7i"]
+[ext_resource type="StyleBox" uid="uid://dm3o1mhvlm6a" path="res://game/UI/button/button_hover_style_box_flat.tres" id="8_dj33n"]
+[ext_resource type="StyleBox" uid="uid://cy3fnltgos7n8" path="res://game/UI/button/button_pressed_style_box_flat.tres" id="9_cvsnq"]
+[ext_resource type="PackedScene" uid="uid://dxdr2csj5224q" path="res://game/pause_menu/pause_menu.tscn" id="9_uc8id"]
+[ext_resource type="AudioStream" uid="uid://chsutmkulnn3f" path="res://assets/audio/music/level_background.wav" id="10_oq3fb"]
+[ext_resource type="StyleBox" uid="uid://do6ghlbbkow6i" path="res://game/UI/button/button_normal_style_box_flat.tres" id="10_ybltb"]
+[ext_resource type="Theme" uid="uid://dqjnfau1d3s6w" path="res://game/UI/button/theme.tres" id="12_ky3cw"]
+
+[sub_resource type="Curve2D" id="Curve2D_jk5hp"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -65, -70, 0, 0, 0, 0, 2007, -64, 0, 0, 0, 0, 2025, 1148, 0, 0, 0, 0, -55, 1136, 0, 0, 0, 0, -65, -70)
+}
+point_count = 5
+
+[node name="Game" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_erucr")
+
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -30
+script = ExtResource("2_i3ehf")
+
+[node name="ColorRect" type="ColorRect" parent="Background"]
+offset_left = -1896.0
+offset_top = -1248.0
+offset_right = 1033.0
+offset_bottom = 341.0
+scale = Vector2(1.58972, 2.81304)
+color = Color(0, 0.529412, 0.329412, 0.270588)
+
+[node name="Map" parent="." instance=ExtResource("3_8uj6u")]
+position = Vector2(-1176, -800)
+scale = Vector2(3.12401, 1.80659)
+
+[node name="Path2D" type="Path2D" parent="Map"]
+position = Vector2(62.5867, 154.326)
+scale = Vector2(0.490107, 1.5088)
+curve = SubResource("Curve2D_jk5hp")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Map/Path2D"]
+unique_name_in_owner = true
+position = Vector2(-65, -70)
+rotation = 0.00289574
+
+[node name="Player" parent="." instance=ExtResource("1_1pcbf")]
+position = Vector2(541, 961)
+
+[node name="ScoreInGame" parent="Player" instance=ExtResource("4_x1emh")]
+unique_name_in_owner = true
+light_mask = 0
+visibility_layer = 4
+position = Vector2(-477, -905)
+script = ExtResource("4_2k6da")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Player"]
+
+[node name="HeaderContainer" type="VBoxContainer" parent="Player/CanvasLayer"]
+offset_top = 56.0
+offset_right = 1080.0
+offset_bottom = 157.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Player/CanvasLayer/HeaderContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="Player/CanvasLayer/HeaderContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/focus = ExtResource("7_3kc7b")
+theme_override_styles/hover = ExtResource("8_dj33n")
+theme_override_styles/pressed = ExtResource("9_cvsnq")
+theme_override_styles/normal = ExtResource("10_ybltb")
+icon = ExtResource("7_fenjy")
+
+[node name="MarginContainer" type="MarginContainer" parent="Player/CanvasLayer/HeaderContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="PineTree" parent="." instance=ExtResource("2_jyx4o")]
+position = Vector2(220, 937)
+
+[node name="PineTree2" parent="." instance=ExtResource("2_jyx4o")]
+position = Vector2(272, 800)
+
+[node name="TimerSpawnMob" type="Timer" parent="."]
+wait_time = 0.6
+autostart = true
+
+[node name="TimerSpawnTree" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[node name="PauseMenu" parent="." instance=ExtResource("9_uc8id")]
+visible = false
+
+[node name="GameOver" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+process_mode = 3
+visible = false
+script = ExtResource("7_mhshv")
+
+[node name="ColorRect" type="ColorRect" parent="GameOver"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_top = -1.0
+offset_right = 1.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.415686, 0.0980392, 0, 0.913725)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOver"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -448.0
+offset_top = -696.0
+offset_right = 448.0
+offset_bottom = 800.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LabelContainer" type="CenterContainer" parent="GameOver/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="GameOver/VBoxContainer/LabelContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("7_q4i7i")
+theme_override_font_sizes/font_size = 200
+text = "Game Over"
+
+[node name="Margin" type="MarginContainer" parent="GameOver/VBoxContainer"]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GameOver/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="GameOver/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("7_q4i7i")
+theme_override_font_sizes/font_size = 100
+text = "Score:
+"
+
+[node name="MarginContainer" type="MarginContainer" parent="GameOver/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+
+[node name="ScoreInGameOver" parent="GameOver/VBoxContainer/HBoxContainer" instance=ExtResource("4_x1emh")]
+unique_name_in_owner = true
+light_mask = 0
+visibility_layer = 4
+position = Vector2(254, 0)
+script = ExtResource("4_2k6da")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOver/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="GameOver/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(280, 90)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 10
+
+[node name="Control" type="Control" parent="GameOver/VBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme = ExtResource("12_ky3cw")
+
+[node name="NewGame" type="Button" parent="GameOver/VBoxContainer/VBoxContainer/HBoxContainer2/Control"]
+layout_mode = 1
+offset_right = 144.0
+offset_bottom = 45.0
+scale = Vector2(1.96, 1.96)
+theme_override_colors/font_color = Color(1, 0.890196, 0.890196, 1)
+theme_override_fonts/font = ExtResource("7_q4i7i")
+text = "New Game"
+
+[node name="BackgroundSound" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+process_mode = 3
+stream = ExtResource("10_oq3fb")
+
+[connection signal="health_depleted" from="Player" to="." method="_on_player_health_depleted"]
+[connection signal="pressed" from="Player/CanvasLayer/HeaderContainer/HBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="timeout" from="TimerSpawnMob" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="TimerSpawnTree" to="." method="_on_timer_spawn_tree_timeout"]
+[connection signal="visibility_changed" from="PauseMenu" to="." method="_on_pause_menu_visibility_changed"]
+[connection signal="visibility_changed" from="PauseMenu" to="PauseMenu" method="_on_visibility_changed"]
+[connection signal="volume_changed" from="PauseMenu" to="." method="_on_pause_menu_volume_changed"]
+[connection signal="pressed" from="GameOver/VBoxContainer/VBoxContainer/HBoxContainer2/Control/NewGame" to="." method="_on_new_game_pressed"]
+[connection signal="finished" from="BackgroundSound" to="." method="_on_background_sound_finished"]

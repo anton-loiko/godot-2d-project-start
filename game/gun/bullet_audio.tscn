@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://1jxuh6nv1u8s"]
+
+[ext_resource type="AudioStream" uid="uid://mnqpqoh22oim" path="res://assets/audio/sfx/sci-fi/laser_shot.wav" id="1_16c4b"]
+
+[node name="BulletAudio" type="AudioStreamPlayer"]
+stream = ExtResource("1_16c4b")
+volume_db = -7.0
+autoplay = true

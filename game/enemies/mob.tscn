@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://bwwqmip58i3xv"]
+
+[ext_resource type="PackedScene" uid="uid://ogik4s70pgwl" path="res://assets/characters/slime/slime.tscn" id="1_0h0ly"]
+[ext_resource type="Script" path="res://game/enemies/mob.gd" id="1_814of"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xgtqt"]
+radius = 55.0091
+
+[sub_resource type="Curve2D" id="Curve2D_j0y5f"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -128, -192, 0, 0, 0, 0, 57.5419, -139.58, 0, 0, 0, 0, -128, 64, 0, 0, 0, 0, -128, -192)
+}
+point_count = 4
+
+[node name="Mob" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_814of")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -26)
+shape = SubResource("CircleShape2D_xgtqt")
+
+[node name="Slime" parent="CollisionShape2D" instance=ExtResource("1_0h0ly")]
+unique_name_in_owner = true
+position = Vector2(0, 26)
+
+[node name="Path2D" type="Path2D" parent="."]
+position = Vector2(8, -64)
+rotation = 0.607574
+scale = Vector2(0.446781, 0.337491)
+curve = SubResource("Curve2D_j0y5f")
+
+[node name="MobFollow" type="PathFollow2D" parent="Path2D"]
+unique_name_in_owner = true
+position = Vector2(-128, -192)
+rotation = 0.275347

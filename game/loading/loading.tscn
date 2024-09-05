@@ -1,0 +1,96 @@
+[gd_scene load_steps=6 format=3 uid="uid://ci1xocrxmtqra"]
+
+[ext_resource type="Script" path="res://game/loading/loading.gd" id="1_fstbv"]
+[ext_resource type="Script" path="res://game/loading/canvas_layer.gd" id="2_aduub"]
+
+[sub_resource type="Animation" id="Animation_6aipx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/VBoxContainer/LoadingLabel:visible_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="Animation" id="Animation_ixwiu"]
+resource_name = "animation"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath("CanvasLayer/VBoxContainer/LoadingLabel:visible")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0666667, 0.33, 0.66, 0.99),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/VBoxContainer/LoadingLabel:visible_ratio")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.0333333, 0.4, 0.7, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 1.0, 0.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tbskk"]
+_data = {
+"RESET": SubResource("Animation_6aipx"),
+"animation": SubResource("Animation_ixwiu")
+}
+
+[node name="Loading" type="Node2D"]
+script = ExtResource("1_fstbv")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource("2_aduub")
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+offset_right = 1080.0
+offset_bottom = 1928.0
+color = Color(0.180392, 0.109804, 0.415686, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+offset_right = 1080.0
+offset_bottom = 1928.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="LoadingLabel" type="Label" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 10
+theme_override_font_sizes/font_size = 90
+text = "LOADING..."
+
+[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 2
+theme_override_font_sizes/font_size = 24
+text = "Like real data loader, this screen is just an example"
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+autostart = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_tbskk")
+}
+speed_scale = 0.3
+movie_quit_on_finish = true

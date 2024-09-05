@@ -1,0 +1,131 @@
+[gd_scene load_steps=13 format=3 uid="uid://y3qrsonetllu"]
+
+[ext_resource type="Script" path="res://game/player/player.gd" id="1_fyp7w"]
+[ext_resource type="PackedScene" uid="uid://pbmyh1qru7p" path="res://assets/characters/happy_boo/happy_boo.tscn" id="1_nxix7"]
+[ext_resource type="PackedScene" uid="uid://dp4g1ujmwh443" path="res://game/gun/gun.tscn" id="3_xe5md"]
+[ext_resource type="Script" path="res://addons/virtual_joystick/virtual_joystick.gd" id="4_h02gi"]
+[ext_resource type="Texture2D" uid="uid://bm30au8mjfc2f" path="res://addons/virtual_joystick/textures/joystick_base_outline.png" id="5_lfei0"]
+[ext_resource type="Texture2D" uid="uid://bkvmydfn5saxg" path="res://addons/virtual_joystick/textures/joystick_tip.png" id="6_tb882"]
+[ext_resource type="AudioStream" uid="uid://caxd7x228wybt" path="res://assets/audio/sfx/characters/death_scream.wav" id="7_ly0dc"]
+[ext_resource type="AudioStream" uid="uid://k3yar7sally8" path="res://assets/audio/sfx/characters/hurt_scream.wav" id="8_xmbw3"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_s3xcg"]
+radius = 34.1321
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4gtrq"]
+radius = 46.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rgp15"]
+bg_color = Color(0.205117, 0.205117, 0.205117, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_agosk"]
+bg_color = Color(0.388235, 0.8, 0.372549, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_fyp7w")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_s3xcg")
+
+[node name="HappyBoo" parent="CollisionShape2D" instance=ExtResource("1_nxix7")]
+unique_name_in_owner = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Gun" parent="." instance=ExtResource("3_xe5md")]
+position = Vector2(1, -35)
+
+[node name="HurtBox" type="Area2D" parent="."]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(-2, -21)
+shape = SubResource("CircleShape2D_4gtrq")
+debug_color = Color(0.872415, 0.310588, 0.414763, 0.42)
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+offset_left = -87.0
+offset_top = -132.0
+offset_right = 87.0
+offset_bottom = -119.0
+theme_override_styles/background = SubResource("StyleBoxFlat_rgp15")
+theme_override_styles/fill = SubResource("StyleBoxFlat_agosk")
+value = 100.0
+show_percentage = false
+
+[node name="Test" type="Node2D" parent="."]
+position = Vector2(5, -4)
+
+[node name="UI" type="CanvasLayer" parent="Test"]
+
+[node name="Virtual joystick left" type="Control" parent="Test/UI"]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = -524.0
+offset_right = 150.0
+offset_bottom = -224.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("4_h02gi")
+
+[node name="Base" type="TextureRect" parent="Test/UI/Virtual joystick left"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(100, 100)
+mouse_force_pass_scroll_events = false
+texture = ExtResource("5_lfei0")
+stretch_mode = 5
+
+[node name="Tip" type="TextureRect" parent="Test/UI/Virtual joystick left/Base"]
+modulate = Color(0.373387, 0.816934, 0.975549, 0.54902)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(50, 50)
+texture = ExtResource("6_tb882")
+stretch_mode = 5
+
+[node name="PlayerAudio" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+process_mode = 3
+stream = ExtResource("7_ly0dc")
+
+[node name="PlayerHurtAudio" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("8_xmbw3")
+volume_db = -12.895

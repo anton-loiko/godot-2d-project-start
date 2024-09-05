@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://cvmfrwhmj282q"]
+
+[ext_resource type="Script" path="res://game/enemies/damage/damage.gd" id="1_ac85j"]
+[ext_resource type="FontFile" uid="uid://bs5dy8ahwm5ug" path="res://assets/fonts/VT323/VT323-Regular.ttf" id="1_y2rbm"]
+
+[node name="Damage" type="Node2D"]
+script = ExtResource("1_ac85j")
+
+[node name="Label" type="Label" parent="."]
+offset_right = 64.0
+offset_bottom = 80.0
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.920995, 0.920995, 0.920995, 1)
+theme_override_fonts/font = ExtResource("1_y2rbm")
+theme_override_font_sizes/font_size = 60
+text = "25"
+
+[node name="Destroy" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Destroy" to="." method="_on_destroy_timeout"]
