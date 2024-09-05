@@ -18,3 +18,4 @@ mono_crash.*.json
 # Exports
 __export
 
+.DS_Store
